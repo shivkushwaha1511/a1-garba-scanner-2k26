@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>A1 Turf — Garba Entry</title>
+
+
+  <!-- QR SCANNER LIBRARY -->
+  <script
+    src="https://unpkg.com/html5-qrcode"
+  ></script>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+
+      margin: 0;
+
+      min-height: 100vh;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background:
+        linear-gradient(
+          135deg,
+          #14001f,
+          #35005c,
+          #12001b
+        );
+
+      color: white;
+
+      display: flex;
+
+      justify-content: center;
+
+      padding: 20px;
+
+    }
+
+
+    .app {
+
+      width: 100%;
+
+      max-width: 480px;
+
+    }
+
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    .header {
+
+      text-align: center;
+
+      margin-bottom: 20px;
+
+    }
+
+
+    .logo {
+
+      font-size: 30px;
+
+      font-weight: 900;
+
+      letter-spacing: 2px;
+
+    }
+
+
+    .subtitle {
+
+      margin-top: 5px;
+
+      font-size: 14px;
+
+      opacity: 0.8;
+
+      letter-spacing: 1px;
+
+    }
+
+
+    /* =====================================================
+       CARD
+    ===================================================== */
+
+    .card {
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.08
+        );
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.15
+        );
+
+      border-radius: 22px;
+
+      padding: 20px;
+
+      margin-bottom: 16px;
+
+      backdrop-filter:
+        blur(15px);
+
+      box-shadow:
+        0 15px 40px
+        rgba(
+          0,
+          0,
+          0,
+          0.3
+        );
+
+    }
+
+
+    /* =====================================================
+       PIN SCREEN
+    ===================================================== */
+
+    #pinScreen {
+
+      display: block;
+
+    }
+
+
+    .pin-title {
+
+      font-size: 22px;
+
+      font-weight: 800;
+
+      text-align: center;
+
+      margin-bottom: 8px;
+
+    }
+
+
+    .pin-subtitle {
+
+      text-align: center;
+
+      font-size: 13px;
+
+      opacity: 0.75;
+
+      margin-bottom: 20px;
+
+    }
+
+
+    input {
+
+      width: 100%;
+
+      padding: 15px;
+
+      border-radius: 12px;
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.2
+        );
+
+      background:
+        rgba(
+          0,
+          0,
+          0,
+          0.3
+        );
+
+      color: white;
+
+      font-size: 18px;
+
+      outline: none;
+
+      text-align: center;
+
+      letter-spacing: 5px;
+
+    }
+
+
+    input::placeholder {
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.5
+        );
+
+      letter-spacing: 1px;
+
+    }
+
+
+    button {
+
+      width: 100%;
+
+      border: none;
+
+      border-radius: 12px;
+
+      padding: 15px;
+
+      font-size: 16px;
+
+      font-weight: 800;
+
+      cursor: pointer;
+
+      margin-top: 12px;
+
+    }
+
+
+    .primary-btn {
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffb000,
+          #ff6a00
+        );
+
+      color: #18000f;
+
+    }
+
+
+    .success-btn {
+
+      background:
+        linear-gradient(
+          135deg,
+          #00e676,
+          #00b85c
+        );
+
+      color: #001b0d;
+
+    }
+
+
+    .danger-btn {
+
+      background:
+        rgba(
+          255,
+          60,
+          60,
+          0.15
+        );
+
+      color: white;
+
+      border:
+        1px solid
+        rgba(
+          255,
+          80,
+          80,
+          0.4
+        );
+
+    }
+
+
+    /* =====================================================
+       SCANNER
+    ===================================================== */
+
+    #scannerScreen {
+
+      display: none;
+
+    }
+
+
+    #reader {
+
+      width: 100%;
+
+      overflow: hidden;
+
+      border-radius: 18px;
+
+      background: black;
+
+    }
+
+
+    .scanner-info {
+
+      text-align: center;
+
+      margin-top: 14px;
+
+      font-size: 14px;
+
+      opacity: 0.75;
+
+    }
+
+
+    .scanner-status {
+
+      text-align: center;
+
+      margin-top: 8px;
+
+      font-weight: 700;
+
+    }
+
+
+    /* =====================================================
+       RESULT
+    ===================================================== */
+
+    #resultScreen {
+
+      display: none;
+
+    }
+
+
+    .status-box {
+
+      text-align: center;
+
+      padding: 18px;
+
+      border-radius: 16px;
+
+      margin-bottom: 18px;
+
+    }
+
+
+    .valid {
+
+      background:
+        rgba(
+          0,
+          230,
+          118,
+          0.15
+        );
+
+      border:
+        1px solid
+        rgba(
+          0,
+          230,
+          118,
+          0.4
+        );
+
+    }
+
+
+    .invalid {
+
+      background:
+        rgba(
+          255,
+          60,
+          60,
+          0.15
+        );
+
+      border:
+        1px solid
+        rgba(
+          255,
+          60,
+          60,
+          0.4
+        );
+
+    }
+
+
+    .warning {
+
+      background:
+        rgba(
+          255,
+          180,
+          0,
+          0.15
+        );
+
+      border:
+        1px solid
+        rgba(
+          255,
+          180,
+          0,
+          0.4
+        );
+
+    }
+
+
+    .status-icon {
+
+      font-size: 42px;
+
+      margin-bottom: 5px;
+
+    }
+
+
+    .status-title {
+
+      font-size: 22px;
+
+      font-weight: 900;
+
+    }
+
+
+    .details {
+
+      display: grid;
+
+      gap: 10px;
+
+    }
+
+
+    .detail {
+
+      display: flex;
+
+      justify-content:
+        space-between;
+
+      gap: 15px;
+
+      padding: 12px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.05
+        );
+
+      border-radius: 10px;
+
+    }
+
+
+    .label {
+
+      opacity: 0.65;
+
+      font-size: 13px;
+
+    }
+
+
+    .value {
+
+      font-weight: 800;
+
+      text-align: right;
+
+      word-break: break-word;
+
+    }
+
+
+    .entry-time {
+
+      text-align: center;
+
+      margin-top: 12px;
+
+      font-size: 14px;
+
+      opacity: 0.8;
+
+    }
+
+
+    /* =====================================================
+       LOADING
+    ===================================================== */
+
+    .loading {
+
+      text-align: center;
+
+      padding: 20px;
+
+    }
+
+
+    .spinner {
+
+      width: 35px;
+
+      height: 35px;
+
+      border:
+        4px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.2
+        );
+
+      border-top-color:
+        #ffb000;
+
+      border-radius: 50%;
+
+      animation:
+        spin 0.8s linear infinite;
+
+      margin:
+        0 auto 12px;
+
+    }
+
+
+    @keyframes spin {
+
+      to {
+
+        transform:
+          rotate(360deg);
+
+      }
+
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    .footer {
+
+      text-align: center;
+
+      font-size: 12px;
+
+      opacity: 0.55;
+
+      margin-top: 20px;
+
+      line-height: 1.6;
+
+    }
+
+
+    .hidden {
+
+      display: none !important;
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+  <!-- =====================================================
+       HEADER
+  ===================================================== -->
+
+  <div class="header">
+
+    <div class="logo">
+      A1 TURF
+    </div>
+
+    <div class="subtitle">
+      FREESTYLE DJ GARBA NIGHT
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       PIN SCREEN
+  ===================================================== -->
+
+  <div
+    id="pinScreen"
+    class="card"
+  >
+
+    <div class="pin-title">
+      Gate Scanner
+    </div>
+
+    <div class="pin-subtitle">
+      Enter gate PIN to start scanning
+    </div>
+
+
+    <input
+      id="pinInput"
+      type="password"
+      inputmode="numeric"
+      maxlength="10"
+      placeholder="Gate PIN"
+    >
+
+
+    <button
+      class="primary-btn"
+      onclick="unlockScanner()"
+    >
+      🔓 UNLOCK SCANNER
+    </button>
+
+
+    <div
+      id="pinError"
+      class="hidden"
+      style="
+        text-align:center;
+        color:#ff7777;
+        margin-top:12px;
+        font-size:14px;
+      "
+    >
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       SCANNER SCREEN
+  ===================================================== -->
+
+  <div
+    id="scannerScreen"
+    class="card"
+  >
+
+    <div
+      style="
+        text-align:center;
+        font-size:20px;
+        font-weight:800;
+        margin-bottom:15px;
+      "
+    >
+      Scan Pass QR
+    </div>
+
+
+    <div id="reader"></div>
+
+
+    <div class="scanner-info">
+      Point the camera at the QR code on the digital pass.
+    </div>
+
+
+    <div
+      id="scannerStatus"
+      class="scanner-status"
+    >
+      Ready to scan
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       RESULT SCREEN
+  ===================================================== -->
+
+  <div
+    id="resultScreen"
+    class="card"
+  >
+
+    <div
+      id="resultStatusBox"
+      class="status-box"
+    >
+
+      <div
+        id="resultIcon"
+        class="status-icon"
+      >
+      </div>
+
+      <div
+        id="resultTitle"
+        class="status-title"
+      >
+      </div>
+
+    </div>
+
+
+    <div
+      id="details"
+      class="details"
+    >
+    </div>
+
+
+    <div
+      id="entryTime"
+      class="entry-time"
+    >
+    </div>
+
+
+    <button
+      id="allowEntryBtn"
+      class="success-btn"
+      onclick="allowEntry()"
+    >
+      ✅ ALLOW ENTRY
+    </button>
+
+
+    <button
+      class="primary-btn"
+      onclick="scanNext()"
+    >
+      📷 SCAN NEXT
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       FOOTER
+  ===================================================== -->
+
+  <div class="footer">
+
+    A1 Turf • Karmeta, Jabalpur<br>
+
+    Freestyle DJ Garba Night<br>
+
+    14 October 2026 • 6:00 PM onwards
+
+  </div>
+
+
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
+
+/*
+ * IMPORTANT:
+ *
+ * Replace this with your Apps Script Web App URL.
+ *
+ * Example:
+ *
+ * https://script.google.com/macros/s/XXXXXXXX/exec
+ */
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbw4iSeYaImrCKidOP5eoyYTWZAU_nMMYyCOaqAwprjLvYEkmzEK9LQO4bBInEZDLa9n/exec";
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let gatePin = "";
+
+let scanner = null;
+
+let currentRegistrationId = "";
+
+let currentPass = null;
+
+let scanningLocked = false;
+
+
+/* =========================================================
+   UNLOCK SCANNER
+========================================================= */
+
+function unlockScanner() {
+
+  const pin =
+    document
+      .getElementById("pinInput")
+      .value
+      .trim();
+
+
+  if (!pin) {
+
+    showPinError(
+      "Please enter the gate PIN."
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * We don't put the PIN in the HTML source.
+   *
+   * It stays only in memory during
+   * this browser session.
+   */
+
+  gatePin = pin;
+
+
+  document
+    .getElementById("pinScreen")
+    .style.display = "none";
+
+
+  document
+    .getElementById("scannerScreen")
+    .style.display = "block";
+
+
+  startScanner();
+
+}
+
+
+/* =========================================================
+   PIN ERROR
+========================================================= */
+
+function showPinError(
+  message
+) {
+
+  const element =
+    document.getElementById(
+      "pinError"
+    );
+
+
+  element.textContent =
+    message;
+
+
+  element.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =========================================================
+   START QR SCANNER
+========================================================= */
+
+async function startScanner() {
+
+  if (scanner) {
+
+    return;
+
+  }
+
+
+  scanner =
+    new Html5Qrcode(
+      "reader"
+    );
+
+
+  const config = {
+
+    fps: 10,
+
+    qrbox: function(
+      viewfinderWidth,
+      viewfinderHeight
+    ) {
+
+      const size =
+        Math.min(
+          viewfinderWidth,
+          viewfinderHeight
+        ) * 0.7;
+
+
+      return {
+        width: size,
+        height: size
+      };
+
+    },
+
+    aspectRatio: 1.0
+
+  };
+
+
+  try {
+
+    await scanner.start(
+
+      {
+        facingMode:
+          "environment"
+      },
+
+      config,
+
+      onScanSuccess,
+
+      onScanFailure
+
+    );
+
+
+    document
+      .getElementById(
+        "scannerStatus"
+      )
+      .textContent =
+      "Ready to scan";
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    document
+      .getElementById(
+        "scannerStatus"
+      )
+      .textContent =
+      "Camera could not be started.";
+
+
+    alert(
+      "Camera access failed. Please allow camera permission and reload the page."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   QR SCAN SUCCESS
+========================================================= */
+
+async function onScanSuccess(
+  decodedText
+) {
+
+  /*
+   * Prevent the scanner from processing
+   * the same QR multiple times.
+   */
+
+  if (scanningLocked) {
+
+    return;
+
+  }
+
+
+  scanningLocked = true;
+
+
+  const registrationId =
+    extractRegistrationId(
+      decodedText
+    );
+
+
+  if (!registrationId) {
+
+    scanningLocked = false;
+
+
+    alert(
+      "Invalid A1 Turf QR code."
+    );
+
+
+    return;
+
+  }
+
+
+  currentRegistrationId =
+    registrationId;
+
+
+  document
+    .getElementById(
+      "scannerStatus"
+    )
+    .textContent =
+    "Checking pass...";
+
+
+  await stopScanner();
+
+
+  await verifyPass(
+    registrationId
+  );
+
+}
+
+
+/* =========================================================
+   QR DATA PARSER
+========================================================= */
+
+function extractRegistrationId(
+  qrText
+) {
+
+  if (!qrText) {
+
+    return null;
+
+  }
+
+
+  let value =
+    String(qrText)
+      .trim()
+      .toUpperCase();
+
+
+  /*
+   * Expected:
+   *
+   * A1G:A1G-0001
+   */
+
+  if (
+    value.startsWith("A1G:")
+  ) {
+
+    value =
+      value.substring(4);
+
+  }
+
+
+  /*
+   * Validate ID.
+   */
+
+  if (
+    /^A1G-\d+$/.test(value)
+  ) {
+
+    return value;
+
+  }
+
+
+  return null;
+
+}
+
+
+/* =========================================================
+   VERIFY PASS
+========================================================= */
+
+async function verifyPass(
+  registrationId
+) {
+
+  showResultLoading();
+
+
+  try {
+
+    const url =
+      API_URL +
+      "?api=1" +
+      "&action=verify" +
+      "&id=" +
+      encodeURIComponent(
+        registrationId
+      );
+
+
+    const response =
+      await fetch(url);
+
+
+    const data =
+      await response.json();
+
+
+    if (!data.success) {
+
+      showInvalidPass(
+        data.error ||
+        "Invalid pass."
+      );
+
+      return;
+
+    }
+
+
+    currentPass =
+      data.pass;
+
+
+    showPassResult(
+      data.pass
+    );
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    showInvalidPass(
+      "Could not connect to the registration server."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+function showResultLoading() {
+
+  document
+    .getElementById(
+      "scannerScreen"
+    )
+    .style.display =
+    "none";
+
+
+  document
+    .getElementById(
+      "resultScreen"
+    )
+    .style.display =
+    "block";
+
+
+  const box =
+    document.getElementById(
+      "resultStatusBox"
+    );
+
+
+  box.className =
+    "status-box warning";
+
+
+  document
+    .getElementById(
+      "resultIcon"
+    )
+    .textContent =
+    "⏳";
+
+
+  document
+    .getElementById(
+      "resultTitle"
+    )
+    .textContent =
+    "VERIFYING PASS";
+
+
+  document
+    .getElementById(
+      "details"
+    )
+    .innerHTML = `
+
+      <div class="loading">
+
+        <div class="spinner"></div>
+
+        Checking registration...
+
+      </div>
+
+    `;
+
+
+  document
+    .getElementById(
+      "allowEntryBtn"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+
+  document
+    .getElementById(
+      "entryTime"
+    )
+    .textContent =
+    "";
+
+}
+
+
+/* =========================================================
+   SHOW PASS RESULT
+========================================================= */
+
+function showPassResult(
+  pass
+) {
+
+  const paymentApproved =
+    String(
+      pass.paymentStatus || ""
+    )
+      .toLowerCase() ===
+      "approved";
+
+
+  const alreadyCheckedIn =
+    String(
+      pass.entryStatus || ""
+    )
+      .toLowerCase() ===
+      "checked in";
+
+
+  const box =
+    document.getElementById(
+      "resultStatusBox"
+    );
+
+
+  const icon =
+    document.getElementById(
+      "resultIcon"
+    );
+
+
+  const title =
+    document.getElementById(
+      "resultTitle"
+    );
+
+
+  const allowButton =
+    document.getElementById(
+      "allowEntryBtn"
+    );
+
+
+  /*
+   * Already checked in
+   */
+
+  if (alreadyCheckedIn) {
+
+    box.className =
+      "status-box invalid";
+
+    icon.textContent =
+      "⚠️";
+
+    title.textContent =
+      "ALREADY CHECKED IN";
+
+    allowButton.classList.add(
+      "hidden"
+    );
+
+
+  /*
+   * Payment not approved
+   */
+
+  } else if (!paymentApproved) {
+
+    box.className =
+      "status-box invalid";
+
+    icon.textContent =
+      "❌";
+
+    title.textContent =
+      "PAYMENT NOT APPROVED";
+
+    allowButton.classList.add(
+      "hidden"
+    );
+
+
+  /*
+   * Valid
+   */
+
+  } else {
+
+    box.className =
+      "status-box valid";
+
+    icon.textContent =
+      "✅";
+
+    title.textContent =
+      "VALID PASS";
+
+    allowButton.classList.remove(
+      "hidden"
+    );
+
+  }
+
+
+  /*
+   * Details
+   */
+
+  document
+    .getElementById(
+      "details"
+    )
+    .innerHTML = `
+
+      ${detailRow(
+        "Registration ID",
+        escapeHtml(
+          pass.registrationId
+        )
+      )}
+
+      ${detailRow(
+        "Name",
+        escapeHtml(
+          pass.name
+        )
+      )}
+
+      ${detailRow(
+        "Pass Type",
+        escapeHtml(
+          formatPassType(
+            pass.passType
+          )
+        )
+      )}
+
+      ${detailRow(
+        "Persons",
+        pass.persons
+      )}
+
+      ${detailRow(
+        "Amount",
+        "₹" +
+        Number(
+          pass.amount || 0
+        )
+      )}
+
+      ${detailRow(
+        "Payment",
+        escapeHtml(
+          pass.paymentStatus
+        )
+      )}
+
+      ${detailRow(
+        "Registration",
+        escapeHtml(
+          pass.registrationStatus
+        )
+      )}
+
+      ${detailRow(
+        "Entry",
+        escapeHtml(
+          pass.entryStatus ||
+          "Not Checked In"
+        )
+      )}
+
+    `;
+
+
+  if (
+    pass.entryTime
+  ) {
+
+    document
+      .getElementById(
+        "entryTime"
+      )
+      .textContent =
+      "Entry time: " +
+      pass.entryTime;
+
+  } else {
+
+    document
+      .getElementById(
+        "entryTime"
+      )
+      .textContent =
+      "";
+
+  }
+
+}
+
+
+/* =========================================================
+   INVALID PASS
+========================================================= */
+
+function showInvalidPass(
+  message
+) {
+
+  const box =
+    document.getElementById(
+      "resultStatusBox"
+    );
+
+
+  box.className =
+    "status-box invalid";
+
+
+  document
+    .getElementById(
+      "resultIcon"
+    )
+    .textContent =
+    "❌";
+
+
+  document
+    .getElementById(
+      "resultTitle"
+    )
+    .textContent =
+    "INVALID PASS";
+
+
+  document
+    .getElementById(
+      "details"
+    )
+    .innerHTML = `
+
+      <div
+        style="
+          text-align:center;
+          padding:20px;
+        "
+      >
+
+        ${escapeHtml(
+          message
+        )}
+
+      </div>
+
+    `;
+
+
+  document
+    .getElementById(
+      "allowEntryBtn"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   ALLOW ENTRY
+========================================================= */
+
+async function allowEntry() {
+
+  if (
+    !currentRegistrationId
+  ) {
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      "allowEntryBtn"
+    );
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "⏳ CHECKING IN...";
+
+
+  try {
+
+    const url =
+      API_URL +
+      "?api=1" +
+      "&action=checkin" +
+      "&id=" +
+      encodeURIComponent(
+        currentRegistrationId
+      ) +
+      "&pin=" +
+      encodeURIComponent(
+        gatePin
+      );
+
+
+    const response =
+      await fetch(url);
+
+
+    const data =
+      await response.json();
+
+
+    if (!data.success) {
+
+      /*
+       * Someone may have checked
+       * the same pass from another phone.
+       */
+
+      if (
+        data.status ===
+        "ALREADY_CHECKED_IN"
+      ) {
+
+        showAlreadyCheckedIn(
+          data
+        );
+
+      } else {
+
+        showInvalidPass(
+          data.error ||
+          "Entry could not be allowed."
+        );
+
+      }
+
+
+      return;
+
+    }
+
+
+    /*
+     * Entry successfully allowed.
+     */
+
+    showEntryAllowed(
+      data.pass
+    );
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    alert(
+      "Could not connect to server."
+    );
+
+
+  } finally {
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "✅ ALLOW ENTRY";
+
+  }
+
+}
+
+
+/* =========================================================
+   ENTRY ALLOWED
+========================================================= */
+
+function showEntryAllowed(
+  pass
+) {
+
+  const box =
+    document.getElementById(
+      "resultStatusBox"
+    );
+
+
+  box.className =
+    "status-box valid";
+
+
+  document
+    .getElementById(
+      "resultIcon"
+    )
+    .textContent =
+    "🟢";
+
+
+  document
+    .getElementById(
+      "resultTitle"
+    )
+    .textContent =
+    "ENTRY ALLOWED";
+
+
+  document
+    .getElementById(
+      "details"
+    )
+    .innerHTML = `
+
+      ${detailRow(
+        "Registration ID",
+        escapeHtml(
+          pass.registrationId
+        )
+      )}
+
+      ${detailRow(
+        "Name",
+        escapeHtml(
+          pass.name
+        )
+      )}
+
+      ${detailRow(
+        "Pass Type",
+        escapeHtml(
+          formatPassType(
+            pass.passType
+          )
+        )
+      )}
+
+      ${detailRow(
+        "Persons",
+        pass.persons
+      )}
+
+      ${detailRow(
+        "Payment",
+        "APPROVED"
+      )}
+
+      ${detailRow(
+        "Entry",
+        "CHECKED IN"
+      )}
+
+    `;
+
+
+  document
+    .getElementById(
+      "entryTime"
+    )
+    .textContent =
+    "Entry time: " +
+    (
+      pass.entryTime ||
+      new Date().toLocaleString()
+    );
+
+
+  document
+    .getElementById(
+      "allowEntryBtn"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   ALREADY CHECKED IN
+========================================================= */
+
+function showAlreadyCheckedIn(
+  data
+) {
+
+  const box =
+    document.getElementById(
+      "resultStatusBox"
+    );
+
+
+  box.className =
+    "status-box invalid";
+
+
+  document
+    .getElementById(
+      "resultIcon"
+    )
+    .textContent =
+    "⚠️";
+
+
+  document
+    .getElementById(
+      "resultTitle"
+    )
+    .textContent =
+    "ALREADY CHECKED IN";
+
+
+  document
+    .getElementById(
+      "allowEntryBtn"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+
+  document
+    .getElementById(
+      "entryTime"
+    )
+    .textContent =
+    data.entryTime
+      ? "Previous entry: " +
+        data.entryTime
+      : "";
+
+}
+
+
+/* =========================================================
+   SCAN NEXT
+========================================================= */
+
+async function scanNext() {
+
+  currentRegistrationId =
+    "";
+
+  currentPass =
+    null;
+
+  scanningLocked =
+    false;
+
+
+  document
+    .getElementById(
+      "resultScreen"
+    )
+    .style.display =
+    "none";
+
+
+  document
+    .getElementById(
+      "scannerScreen"
+    )
+    .style.display =
+    "block";
+
+
+  document
+  .getElementById(
+    "scannerStatus"
+  )
+  .textContent =
+  "Ready to scan";
+
+
+  if (!scanner) {
+
+    await startScanner();
+
+  } else {
+
+    document
+      .getElementById(
+        "scannerStatus"
+      )
+      .textContent =
+      "Ready to scan";
+
+  }
+
+}
+
+
+/* =========================================================
+   STOP SCANNER
+========================================================= */
+
+async function stopScanner() {
+
+  if (!scanner) {
+
+    return;
+
+  }
+
+
+  try {
+
+    await scanner.stop();
+
+  } catch (error) {
+
+    console.log(
+      "Scanner stop:",
+      error
+    );
+
+  }
+
+
+  try {
+
+    scanner.clear();
+
+  } catch (error) {
+
+    console.log(
+      "Scanner clear:",
+      error
+    );
+
+  }
+
+
+  scanner = null;
+
+}
+
+
+/* =========================================================
+   SCANNER FAILURE
+========================================================= */
+
+function onScanFailure(
+  error
+) {
+
+  /*
+   * Ignore continuous QR
+   * scanning failures.
+   */
+
+}
+
+
+/* =========================================================
+   DETAIL ROW
+========================================================= */
+
+function detailRow(
+  label,
+  value
+) {
+
+  return `
+
+    <div class="detail">
+
+      <div class="label">
+        ${label}
+      </div>
+
+      <div class="value">
+        ${value}
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   FORMAT PASS TYPE
+========================================================= */
+
+function formatPassType(
+  type
+) {
+
+  switch (
+    String(type || "")
+      .toUpperCase()
+  ) {
+
+    case "SINGLE":
+      return "Single";
+
+    case "COUPLE":
+      return "Couple";
+
+    case "GROUP5":
+      return "Group of 5";
+
+    default:
+      return type || "";
+
+  }
+
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value || ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
