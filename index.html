@@ -1121,11 +1121,11 @@ function extractRegistrationId(
    */
 
   if (
-    /^A1G-\d+$/.test(value)
+  /^A1G-(?:\d+|[A-Z0-9]{6})$/.test(value)
   ) {
-
+  
     return value;
-
+  
   }
 
 
